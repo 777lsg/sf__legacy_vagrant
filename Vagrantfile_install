@@ -1,0 +1,23 @@
+
+Vagrant.configure("2") do |config|
+  
+  config.vm.box = "generic/ubuntu2204"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    vb.cpus = 1
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt-get install libpq5 postgresql-common ssl-cert -y
+    curl -LO https://apt.postgresql.org/pub/repos/apt/pool/main/p/postgresql-8.4/postgresql-client-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb
+    curl -LO https://apt.postgresql.org/pub/repos/apt/pool/main/p/postgresql-8.4/postgresql-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install ./postgresql-client-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb
+    sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install ./postgresql-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb
+    #sudo apt-get install ./postgresql-client-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb -y
+    #sudo apt-get install ./postgresql-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb -y
+    #sudo dpkg --force all -i postgresql-client-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb
+    #sudo dpkg -i postgresql-8.4_8.4.22-8.pgdg22.04+1+b1_amd64.deb
+  SHELL
+  
+end
